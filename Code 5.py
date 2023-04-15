@@ -30,8 +30,8 @@ import math
 import statistics
 import pickle
 import matplotlib.pyplot as plt
-from Code1 import code1main
-from Code2 import code2main
+from Get_Youtube_Comments import code1main
+from Clean_youtube_comments import code2main
 from Code3 import code3main
 
 #run dependencies once only 
