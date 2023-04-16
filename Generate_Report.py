@@ -5,9 +5,9 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Cm
 import os
 from datetime import date
+from dalleimggen import get_img_prompt
 
-
-def get_report(product,globalvalues={}):
+def get_report(report_path,product,globalvalues={}):
     product = "apple watch"
     
     #global variables dafault and will update if any values
@@ -26,11 +26,11 @@ def get_report(product,globalvalues={}):
     tablecount = 0
 
     #get list of recommendation
-    recco = pd.read_csv("Recommendation.csv")
+    recco = pd.read_csv(f"{report_path}/Recommendation.csv")
     recco["Sentiment Cumulative Score"] = recco[["Sentiment Cumulative Score"]].apply(lambda x : abs(x))
     recco.sort_values(by='Sentiment Cumulative Score', inplace=True)
     print(recco["Sentiment Cumulative Score"])
-    
+    get_img_prompt(report_path,product,list(recco["Recommendation"]))
 
     #Styling
 
@@ -46,7 +46,7 @@ def get_report(product,globalvalues={}):
     header.paragraphs[0].text = f"AID Report - Sentiment Analysis and Report for {product} "
 
     #add hero img which is the first image
-    listofimg = os.listdir("img")
+    listofimg = os.listdir(f"{report_path}/img")
     print(listofimg)
     #get relevant file
     relevantnames = []
@@ -122,28 +122,6 @@ def get_report(product,globalvalues={}):
     tablecount = addtable(doc,reccotable,tablecount,["Component Specification" , "Recommendation" , "Priority" , "Current Benchmark"],[3,7,2,3])
     #sorting code below
     table = doc.tables[tablecount-1]
-    def sorttable(table):
-        # Sort the table based on the values in the second column (assuming it has a header row)
-        data = [(cell.text, idx) for idx, row in enumerate(table.rows) for cell in row.cells]
-        header_row = table.rows[0]
-        sorted_rows = sorted(table.rows[1:], key=lambda row: row.cells[1].text)
-        table._element.clear_content()
-        doc.add_heading("Conclusions" , level=2)
-        # Add the sorted rows to the table
-        table.add_row().cells = header_row.cells
-        for row in sorted_rows:
-            table.add_row().cells = row.cells
-    #sorttable(table)
-        
-    conclusion_string = f"""
-    Thanks for using the product to generate a report for the {product}. We hope that the {min(20,len(reccotable))} recommendations 
-    you have gotten was beneficial for your product developement journey! In general the product has received {globalsentiment}
-    ratings from the youtube and amazon community which are our main source of feedback.
-    """
-    # add a paragraph of text to the document
-    doc.add_paragraph(conclusion_string)
-
-
     # Iterate over all the rows in the table to clear empty rows
     new_table = docx.Document().add_table(rows=0, cols=len(table.columns))
     new_table.style = "Table Grid"
@@ -161,15 +139,28 @@ def get_report(product,globalvalues={}):
     # Replace the original table with the new table
     table._element.getparent().replace(table._element, new_table._element)
     
+    nameusedlist = list(pd.read_csv(f"{report_path}/{product} dalle prompts used.csv")["imgname"])
+    promptusedlist = list(pd.read_csv(f"{report_path}/{product} dalle prompts used.csv")["Prompts used for dall e"])
+    doc.add_heading("Table of Dall E generated images and associated prompts" , level = 2)
+    prompt_table = doc.add_table(rows = len(nameusedlist)+1 , cols = 2)
+    prompt_table.rows[0].cells[0].text= "Prompts used"
+    prompt_table.rows[0].cells[1].text= "Image generated"
+    prompt_table.style = "Table Grid"
+    for idx,eachimg in enumerate(nameusedlist):
+        print(eachimg)
+        prompt_table.cell(idx+1,0).text  = promptusedlist[idx]
+        cell = prompt_table.cell(idx+1,1)
+        img = cell.add_paragraph().add_run()
+        img.add_picture(f"{report_path}/img/{eachimg}", width=Inches(2.5))
+    # add an image to the first column of the table
+    
+    
+    conclusion_string = f"""
+    Thanks for using the product to generate a report for the {product}. We hope that the {min(20,len(reccotable))} recommendations 
+    you have gotten was beneficial for your product developement journey! In general the product has received {globalsentiment}
+    ratings from the youtube and amazon community which are our main source of feedback.
+    """
+    # add a paragraph of text to the document
+    doc.add_paragraph(conclusion_string)
     # save the document
-    doc.save(f'{product} recommendation report.docx')
-commentparsed = 200
-overallsentiment = "Positive"
-promptlist = ["No Prompts"]
-accuracy= 100
-product="apple watch"
-get_report(product, globalvalues={"numberofcomments" : commentparsed , 
-                                  "globalsentiment" : overallsentiment,
-                                  "componentliststring" : ["abc","sdasdasd"],
-                                "promptliststring" : promptlist,
-                                "accuracy":accuracy})
+    doc.save(f'{report_path}/{product} recommendation report.docx')

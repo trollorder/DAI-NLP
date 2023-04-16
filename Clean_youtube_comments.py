@@ -140,3 +140,6 @@ def clean_youtube_comments():
     pickle.dump(raw_comments, open("support/%s/raw_comments.pkl" % search_terms, "wb"))
     pickle.dump(all_stopwords, open("support/%s/all_stopwords.pkl" % search_terms, "wb"))
     pickle.dump(stop, open("support/%s/stop_words.pkl" % search_terms, "wb"))
+
+    
+    

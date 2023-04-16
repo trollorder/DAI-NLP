@@ -4,11 +4,11 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 
-def get_sentiment_analysis_graph(product):
+def get_sentiment_analysis_graph(report_path,product):
     product = "apple watch"
 
     # load CSV file into DataFrame
-    df = pd.read_csv('amazon_review Sentiment Analysis.csv')
+    df = pd.read_csv(f'{report_path}/amazon_review Sentiment Analysis.csv')
     # convert date column to int
 
     df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -48,7 +48,7 @@ def get_sentiment_analysis_graph(product):
     plt.title(f'Sentiment over Time for {product} ')
     plt.xlabel('Time Stamp')
     plt.ylabel('Sentiment')
-    plt.savefig(f'img/{product} Sentiment Analysis Overtime.png')
+    plt.savefig(f'{report_path}/img/{product} Sentiment Analysis Overtime.png')
     # show the plot
-    plt.show()
+
 

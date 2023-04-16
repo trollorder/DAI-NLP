@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
        
-def wikipedia_scrape_and_generate_image(prompt):
+def wikipedia_scrape_and_generate_image(report_path,prompt):
     url = "https://en.wikipedia.org/wiki/"+prompt #requires prompt to have word1_word2:
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -19,7 +19,7 @@ def wikipedia_scrape_and_generate_image(prompt):
         if'.jpeg' in img_url:
             file = prompt + str(count) + '.jpeg'
         image_response = requests.get(img_url)
-        path = os.path.join("img", file)  # path including the folder name "img"
+        path = os.path.join(f"{report_path}/img", file).replace("\\", "/") # path including the folder name "img"
         with open(path, "wb") as f: #Product Image stored in directory
             f.write(image_response.content)
         count +=1

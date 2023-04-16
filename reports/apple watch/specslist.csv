@@ -1,0 +1,69 @@
+,component,specs,details
+0,display,screen_size_inches,1.57
+1,display,display_resolution_pixels,"(390, 312)"
+2,display,display_type,OLED
+3,display,touchscreen_type,capacitive
+4,display,maximum_brightness_nits,1000
+5,display,display_protection,Ion-X strengthened glass
+6,display,always_on_display,True
+7,display,variable_refresh_rate,True
+8,digital crown,material,stainless steel
+9,digital crown,function,scrolling and zooming
+10,digital crown,sensitivity,adjustable
+11,digital crown,durability,water-resistant
+12,digital crown,integration,"Siri, apps, and notifications"
+13,digital crown,design,ergonomic and intuitive
+14,digital crown,size,small and unobtrusive
+15,side button,shape,circular
+16,side button,color,chrome
+17,side button,functionality,multifunctional
+18,side button,texture,satin finish
+19,side button,position,on the right side of the watch
+20,heart rate sensor,Name,Apple Watch Heart Rate Sensor
+21,heart rate sensor,Type,Optical sensor
+22,heart rate sensor,Measuring method,Photoplethysmography
+23,heart rate sensor,Measuring location,Wrist
+24,heart rate sensor,Measuring range,30 to 210 beats per minute
+25,heart rate sensor,Accuracy,"+/- 2 beats per minute or 2%, whichever is higher"
+26,heart rate sensor,Power source,Built-in rechargeable lithium-ion battery
+27,heart rate sensor,Communication protocol,Bluetooth
+28,heart rate sensor,Compatibility,iOS devices with Bluetooth 4.0 or later
+29,accelerometer,name,Apple Watch Accelerometer
+30,accelerometer,measurement units,g (acceleration due to gravity)
+31,accelerometer,measurement range,-8g to 8g
+32,accelerometer,resolution,0.01g
+33,accelerometer,sampling rate,up to 100Hz
+34,accelerometer,axes,"x, y, z"
+35,accelerometer,power consumption,low
+36,accelerometer,accuracy,±2g
+37,accelerometer,technology,3-axis accelerometer
+38,accelerometer,supported devices,Apple Watch Series 1 and later
+39,gyroscope,name,Gyroscope
+40,gyroscope,sensing_axis,"x, y, z"
+41,gyroscope,measurement_range,"±250, ±500, or ±2000 degrees per second"
+42,gyroscope,sensitivity,"up to 131 LSB (±250°/s range), up to 65.5 LSB (±500°/s range), up to 32.8 LSB (±1000°/s range), up to 16.4 LSB (±2000°/s range)"
+43,gyroscope,sampling_rate,up to 800 Hz
+44,gyroscope,power_consumption,"0.2 mA (active mode), 6 μA (Sleep mode)"
+45,ambient light sensor,type,photodiode
+46,ambient light sensor,wavelength_range,400-700 nm
+47,ambient light sensor,detection_range,1-1000 lux
+48,ambient light sensor,output,analog voltage
+49,ambient light sensor,package,surface mount
+50,ambient light sensor,dimensions,1.2 x 1.2 x 0.4mm
+51,ambient light sensor,operating_temperature,-40 to 85 deg C
+52,speaker,Brand,Apple
+53,speaker,Model,Watch
+54,speaker,Type,Speaker
+55,speaker,Compatibility,Apple Devices
+56,speaker,Connectivity,Bluetooth
+57,speaker,Sound Quality,Decent
+58,speaker,Volume,Medium
+59,speaker,Size,Small
+60,microphone,type,digital
+61,microphone,sensitivity,good
+62,microphone,directionality,omnidirectional
+63,microphone,frequency response,20Hz-20kHz
+64,battery,Type,Lithium Ion
+65,battery,Capacity,Up to 18 hours
+66,battery,Charge Time,"2.5 hours to 80%, 1.5 hours to 100%"
+67,battery,Compatibility,Apple Watch Series 1 - 6

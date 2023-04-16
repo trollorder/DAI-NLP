@@ -1,7 +1,7 @@
 import pickle 
 import pandas as pd
 
-def generate_youtubecomments_df():
+def generate_youtubecomments_df(report_path):
     def consolidate_comments(clean_comments):
         processedcomments = []
         for video in clean_comments:
@@ -26,4 +26,4 @@ def generate_youtubecomments_df():
     processedstring = consolidate_comments(clean_comments) #generate list of comment strings from table of comments from clean comments
     processedstring = remove_empty_comments(processedstring)
     clean_comments = pd.DataFrame(processedstring,columns=["comment"])
-    clean_comments.to_csv("youtube comments.csv")
+    clean_comments.to_csv(f"{report_path}/youtube comments.csv")

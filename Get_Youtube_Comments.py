@@ -159,7 +159,29 @@ def get_youtube_comments(search_terms = "apple watch" , max_results = 20 ):     
     print(combined_data[0])     # print entry 1
     print(combined_data[1])     # print entry 2
     # Copy & Paste
+    timestamps = []
+    print("Get timestamp data...")
+    ''' This part of the code is already included above Ln 83 to Ln 88 '''
+    for i in range(len(vid_id)):
+        request = youtube.commentThreads().list(
+            part="snippet,replies",
+            videoId=vid_id[i]
+        )
+        comment_response = request.execute()
+        # print(comment_response)
 
+        ''' this part is new '''
+        try:
+            comments_found = comment_response['pageInfo']['totalResults']  # see main code to incorporate "nextpagetoken"
+            for j in range(comments_found):
+                try:
+                    print(comment_response['items'][j]['snippet']['topLevelComment']['snippet']['textDisplay'])  # comment
+                    timestamps.append(comment_response['items'][j]['snippet']['topLevelComment']['snippet']['publishedAt'])
+                    print(comment_response['items'][j]['snippet']['topLevelComment']['snippet']['publishedAt'])  # timestamp
+                except:
+                    print("error getting comment")
+        except:
+            print("No comment retrieved")
 
     '''create dir and save files'''
     try:                                            # Create directory named after search terms
@@ -172,7 +194,7 @@ def get_youtube_comments(search_terms = "apple watch" , max_results = 20 ):     
     pickle.dump(vid_page, open("support/%s/vid_page.pkl" % search_terms, "wb"))
     pickle.dump(combined_data, open("support/%s/combined_data.pkl" % search_terms, "wb"))
     pickle.dump(vid_id, open("support/%s/vid_id.pkl" % search_terms, "wb"))
-
+    pickle.dump(timestamps, open("support/%s/timestamps.pkl" % search_terms, "wb"))
     try:                                            # Create directory to store current search terms
         os.makedirs("support/_current_")
         print("Directory _current_ created")

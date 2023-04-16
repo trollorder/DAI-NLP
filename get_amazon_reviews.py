@@ -66,6 +66,7 @@ def get_reviews(soup,review_list):
     try:
         time.sleep(1)
         reviews = soup.find_all('div', {'data-hook': 'review'})
+        print(f"Number of reviews is at {len(reviews)}")
         for item in reviews:
             review = {
             'title': item.find('a', {'data-hook': 'review-title'}).text.strip(),    
@@ -96,7 +97,9 @@ def get_page_contents(url):
 
 #Function to generate Amazon reviews from product prompt and returns a list of dictionaries(reviews)
 def generate_amazon_reviews(prompt): 
-    HEADERS = ({'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299", 'Accept-Language': 'en-US, en;q=0.5'})
+    HEADERS = ({'User-Agent':
+
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36", 'Accept-Language': 'en-US, en;q=0.5'})
     
     # Amazon search page URL
     search_url = "https://www.amazon.com/s?k="+prompt
@@ -132,13 +135,12 @@ def generate_amazon_reviews(prompt):
     print("---Scraping Complete---")
     return reviewList
         
-def get_product_review_amazon(product):
+def get_product_review_amazon(report_path,product):
     all_reviews = generate_amazon_reviews(product) #product prompt
     print('Total review count: ' + str(len(all_reviews)))
     prod_df = pd.DataFrame(all_reviews) #main dataset
     print(prod_df)
-    prod_df.to_csv("amazon_reviews.csv") #save to csv file
+    prod_df.to_csv(f"{report_path}/amazon_reviews.csv") #save to csv file
     print("CSV Saved")
     
-
     
