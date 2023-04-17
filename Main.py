@@ -346,8 +346,8 @@ def qnacomments(dict_spec_comp):
             print(f"For {componentspec} the responses is a such {qnaresponselist}")
             compdict["response list"] = qnaresponselist
     
-#set global variables
-openai.api_key = "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"
+#set global variables, this openai key is globally accessible
+openai.api_key = "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"
 run_check = False    
 product = "apple watch"
 
@@ -368,17 +368,27 @@ img_path = os.path.join(report_path, "img")
 os.makedirs(img_path, exist_ok=True)
 
 #scrape and retrieve images
-wikipedia_scrape_and_generate_image(report_path,product)
+try:
+    wikipedia_scrape_and_generate_image(report_path,product)
+except:
+    print("No product image available on wikipedia")
+    
 get_youtube_comments(search_terms=product,max_results=30)
 clean_youtube_comments()
 generate_youtubecomments_df(report_path)
 get_product_review_amazon(report_path,product)
 
 #plot the graphs from Sentiment Analysis
-amazon_comments_SA(report_path)
-youtube_comments_SA(report_path)
-
-#get components and specifications list
+try:
+    amazon_comments_SA(report_path)
+except:
+    print("No Amazon Comments found for Sentiment analysis")
+try:
+    youtube_comments_SA(report_path)
+except:
+    print("No Youtube Comments found for Sentiment analysis")
+    
+#get components and specifications list from chatgpt
 get_comp_specs_chatgpt(report_path,product)
 specslist = pd.read_csv("specslist.csv",index_col=0) 
 componentlist = getcomponentlist(report_path)

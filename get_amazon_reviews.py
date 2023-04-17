@@ -97,6 +97,7 @@ def get_page_contents(url):
 
 #Function to generate Amazon reviews from product prompt and returns a list of dictionaries(reviews)
 def generate_amazon_reviews(prompt): 
+    #change the headers if you are not getting any comments
     HEADERS = ({'User-Agent':
 
 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36", 'Accept-Language': 'en-US, en;q=0.5'})

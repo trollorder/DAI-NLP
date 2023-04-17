@@ -4,7 +4,6 @@ from transformers import pipeline
 import pandas as pd
 import time
 def get_img_prompt(report_path,product,recommendations):
-    openai.api_key = "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"  
     model_name = "deepset/roberta-base-squad2"
     nlp = pipeline('question-answering', model=model_name, tokenizer=model_name)
 

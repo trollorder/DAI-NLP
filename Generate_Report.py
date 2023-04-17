@@ -6,6 +6,7 @@ from docx.shared import Cm
 import os
 from datetime import date
 from dalleimggen import get_img_prompt
+import assess_sustainability
 
 def get_report(report_path,product,globalvalues={}):
     product = "apple watch"
@@ -55,7 +56,10 @@ def get_report(report_path,product,globalvalues={}):
             relevantnames.append(imagename)
             
     print(relevantnames)
-    doc.add_picture(f'img/{product}1.png', width=Inches(3))
+    try:
+        doc.add_picture(f'img/{product}1.png', width=Inches(3))
+    except:
+        print("No header image found")
     lastp = doc.paragraphs[-1]
     # Set the alignment of the paragraph to center
     lastp.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -154,7 +158,13 @@ def get_report(report_path,product,globalvalues={}):
         img.add_picture(f"{report_path}/img/{eachimg}", width=Inches(2.5))
     # add an image to the first column of the table
     
+    #code below for sustainability analysis
+    doc.add_heading("Sustainability Recommendation Ranking" , level=2)
+    answer = assess_sustainability.getchatgptranking(report_path)
+    doc.add_paragraph(answer)
     
+    #end code on sustainability analysis
+    doc.add_heading("Analysis Conclusion" , level = 2)
     conclusion_string = f"""
     Thanks for using the product to generate a report for the {product}. We hope that the {min(20,len(reccotable))} recommendations 
     you have gotten was beneficial for your product developement journey! In general the product has received {globalsentiment}
